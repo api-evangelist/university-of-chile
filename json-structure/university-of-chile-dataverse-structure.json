@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-chile/main/json-structure/university-of-chile-dataverse-structure.json",
+  "name": "Dataverse",
+  "description": "JSON Structure for a University of Chile Dataverse collection, derived from the live OpenAPI Dataverse schema (Dataverse 5.13).",
+  "type": "object",
+  "properties": {
+    "id": { "type": "int64", "description": "Internal numeric identifier." },
+    "name": { "type": "string", "description": "Display name." },
+    "alias": { "type": "string", "description": "Short URL-safe alias." },
+    "description": { "type": "string", "description": "Description of the dataverse." },
+    "affiliation": { "type": "string", "description": "Affiliated institution or unit." },
+    "dataverseType": { "type": "string", "description": "Type of dataverse." },
+    "storageDriver": { "type": "string", "description": "Storage driver in use." },
+    "metadataLanguage": { "type": "string", "description": "Default metadata language." },
+    "publicationDate": { "type": "string", "format": "date-time", "description": "Publication date." },
+    "createDate": { "type": "string", "format": "date-time", "description": "Creation date." },
+    "dataverseContacts": { "type": "array", "items": { "type": "object" }, "description": "Contact entries." }
+  },
+  "required": ["name", "alias"]
+}

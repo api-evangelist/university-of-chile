@@ -49,6 +49,28 @@ apis:
         url: https://guides.dataverse.org/en/latest/api/
       - type: Website
         url: https://datos.uchile.cl/
+      - type: OpenAPI
+        url: openapi/university-of-chile-research-data-dataverse.yaml
+      - type: x-json-schema
+        url: json-schema/university-of-chile-dataset-schema.json
+      - type: x-json-schema
+        url: json-schema/university-of-chile-datafile-schema.json
+      - type: x-json-schema
+        url: json-schema/university-of-chile-dataverse-schema.json
+      - type: x-json-schema
+        url: json-schema/university-of-chile-search-item-schema.json
+      - type: x-json-structure
+        url: json-structure/university-of-chile-dataset-structure.json
+      - type: x-json-structure
+        url: json-structure/university-of-chile-dataverse-structure.json
+      - type: x-example
+        url: examples/university-of-chile-search-example.json
+      - type: x-example
+        url: examples/university-of-chile-info-version-example.json
+      - type: x-rules
+        url: rules/university-of-chile-rules.yml
+      - type: x-vocabulary
+        url: vocabulary/university-of-chile-vocabulary.yml
   - aid: university-of-chile:repositorio-oai-pmh
     name: Repositorio Academico OAI-PMH
     description: >-
@@ -84,6 +106,8 @@ common:
     url: finops/university-of-chile-finops.yml
   - type: Review
     url: review.yml
+  - type: JSONLD
+    url: json-ld/university-of-chile-context.jsonld
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

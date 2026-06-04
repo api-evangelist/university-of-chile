@@ -1,0 +1,44 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://datos.uchile.cl/api/search?q=*&type=dataset&per_page=2",
+    "description": "Search the University of Chile Dataverse for datasets. Captured live 2026-06-03."
+  },
+  "response": {
+    "status": "OK",
+    "data": {
+      "q": "*",
+      "total_count": 145,
+      "start": 0,
+      "spelling_alternatives": {},
+      "items": [
+        {
+          "name": "Impactos declarados hacia el suelo por proyectos ingresados al SEIA, ubicados en comunas con áreas protegidas en la Región Metropolitana de Santiago",
+          "type": "dataset",
+          "url": "https://doi.org/10.34691/UCHILE/L9XF6R",
+          "global_id": "doi:10.34691/UCHILE/L9XF6R",
+          "description": "Este archivo contiene información sistematizada sobre los impactos que han sido declarados hacia el suelo, por parte de proyectos ingresados al Sistema de Evaluación de Impacto Ambiental (SEIA) y aprobados por el Servicio de Evaluación Ambiental (SEA), situados en comunas con Áreas Protegidas en la Región Metropolitana de Santiago.",
+          "published_at": "2023-05-22T05:57:03Z",
+          "publisher": "Facultad de Ciencias Agronómicas",
+          "identifier_of_dataverse": "FCA",
+          "name_of_dataverse": "Facultad de Ciencias Agronómicas",
+          "citation": "Caro Herrera, Camila, 2023, \"Impactos declarados hacia el suelo por proyectos ingresados al SEIA, ubicados en comunas con áreas protegidas en la Región Metropolitana de Santiago\", https://doi.org/10.34691/UCHILE/L9XF6R, Repositorio de datos de investigación de la Universidad de Chile, V2",
+          "storageIdentifier": "file://10.34691/UCHILE/L9XF6R",
+          "keywords": ["Suelo"],
+          "subjects": ["Earth and Environmental Sciences", "Engineering", "Law", "Social Sciences", "Other"],
+          "fileCount": 1,
+          "versionId": 151,
+          "versionState": "RELEASED",
+          "majorVersion": 2,
+          "minorVersion": 0,
+          "createdAt": "2023-05-16T00:14:22Z",
+          "updatedAt": "2023-05-22T05:57:03Z",
+          "contacts": [
+            { "name": "Caro Herrera, Camila", "affiliation": "Universidad de Chile" }
+          ],
+          "authors": ["Caro Herrera, Camila"]
+        }
+      ]
+    }
+  }
+}

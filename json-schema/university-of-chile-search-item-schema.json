@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-chile/main/json-schema/university-of-chile-search-item-schema.json",
+  "title": "Dataverse Search Result Item (dataset)",
+  "description": "A single dataset item returned by the University of Chile Dataverse Search API (GET /api/search). Fields reflect the live response observed at datos.uchile.cl on 2026-06-03.",
+  "type": "object",
+  "properties": {
+    "name": { "type": "string", "description": "Title of the dataset." },
+    "type": { "type": "string", "description": "Result type (dataset, dataverse, or file).", "enum": ["dataset", "dataverse", "file"] },
+    "url": { "type": "string", "format": "uri", "description": "Resolvable DOI URL for the result." },
+    "global_id": { "type": "string", "description": "Global persistent identifier (e.g. doi:10.34691/UCHILE/L9XF6R)." },
+    "description": { "type": "string", "description": "Description / abstract of the dataset." },
+    "published_at": { "type": "string", "format": "date-time", "description": "Publication timestamp." },
+    "publisher": { "type": "string", "description": "Publishing dataverse / unit." },
+    "citation": { "type": "string", "description": "Plain-text citation." },
+    "citationHtml": { "type": "string", "description": "HTML-formatted citation." },
+    "storageIdentifier": { "type": "string", "description": "Storage location identifier." },
+    "identifier_of_dataverse": { "type": "string", "description": "Alias of the owning dataverse." },
+    "name_of_dataverse": { "type": "string", "description": "Name of the owning dataverse." },
+    "keywords": { "type": "array", "items": { "type": "string" }, "description": "Keyword tags." },
+    "subjects": { "type": "array", "items": { "type": "string" }, "description": "Subject classifications." },
+    "fileCount": { "type": "integer", "description": "Number of files in the dataset." },
+    "versionId": { "type": "integer", "description": "Internal version identifier." },
+    "versionState": { "type": "string", "description": "Version state (e.g. RELEASED)." },
+    "majorVersion": { "type": "integer", "description": "Major version number." },
+    "minorVersion": { "type": "integer", "description": "Minor version number." },
+    "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp." },
+    "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp." },
+    "contacts": {
+      "type": "array",
+      "description": "Dataset contacts.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "affiliation": { "type": "string" }
+        }
+      }
+    },
+    "authors": { "type": "array", "items": { "type": "string" }, "description": "Dataset authors." }
+  },
+  "required": ["name", "type", "global_id"],
+  "additionalProperties": true
+}

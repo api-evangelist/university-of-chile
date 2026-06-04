@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-chile/main/json-schema/university-of-chile-dataverse-schema.json",
+  "title": "Dataverse Collection",
+  "description": "A dataverse (collection container) as represented by the University of Chile Dataverse API. Properties reflect the Dataverse schema published in the deployment's live OpenAPI document (Dataverse 5.13).",
+  "type": "object",
+  "properties": {
+    "id": { "type": "number", "description": "Internal numeric identifier of the dataverse." },
+    "name": { "type": "string", "description": "Display name of the dataverse." },
+    "alias": { "type": "string", "description": "Short URL-safe alias (e.g. FCA)." },
+    "description": { "type": "string", "description": "Description of the dataverse." },
+    "affiliation": { "type": "string", "description": "Affiliated institution or unit." },
+    "dataverseType": { "type": "string", "description": "Type of dataverse (e.g. DEPARTMENT, RESEARCH_PROJECT)." },
+    "permissionRoot": { "type": "boolean", "description": "Whether this dataverse is a permission root." },
+    "metadataBlockRoot": { "type": "boolean", "description": "Whether metadata blocks are rooted here." },
+    "facetRoot": { "type": "boolean", "description": "Whether facets are rooted here." },
+    "themeRoot": { "type": "boolean", "description": "Whether the theme is rooted here." },
+    "templateRoot": { "type": "boolean", "description": "Whether templates are rooted here." },
+    "guestbookRoot": { "type": "boolean", "description": "Whether guestbooks are rooted here." },
+    "storageDriver": { "type": "string", "description": "Storage driver in use." },
+    "metadataLanguage": { "type": "string", "description": "Default metadata language." },
+    "publicationDate": { "type": "string", "format": "date-time", "description": "Publication date of the dataverse." },
+    "createDate": { "type": "string", "format": "date-time", "description": "Creation date of the dataverse record." },
+    "dataverseContacts": { "type": "array", "description": "Contact entries for the dataverse.", "items": { "type": "object" } },
+    "dataverseSubjects": { "type": "array", "description": "Subject classifications.", "items": { "type": "object" } }
+  },
+  "additionalProperties": true
+}

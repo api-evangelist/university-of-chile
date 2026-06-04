@@ -1,0 +1,62 @@
+vocabulary:
+  name: University of Chile Research Data and Repository Vocabulary
+  description: >-
+    Controlled terms observed across the University of Chile public scholarly
+    APIs: the Dataverse research data repository (datos.uchile.cl, Dataverse
+    5.13) and the DSpace institutional repository OAI-PMH interface
+    (repositorio.uchile.cl). Definitions are drawn from the live Dataverse
+    OpenAPI document and the OAI-PMH 2.0 standard.
+  version: "1.0.0"
+  terms:
+    - term: Dataverse
+      definition: >-
+        A container (collection) that holds datasets and may hold other
+        dataverses; the top-level organizing unit of the repository.
+      tags: [dataverse, collection, container]
+    - term: Dataset
+      definition: >-
+        A container for research data files plus their metadata, citation and
+        terms; minted with a persistent identifier (DOI).
+      tags: [dataset, research-data, doi]
+    - term: DataFile
+      definition: >-
+        An individual file within a dataset, carrying content type, size and
+        a fixity checksum.
+      tags: [file, datafile, checksum]
+    - term: GlobalId
+      definition: >-
+        Persistent identifier of a dataset or file, composed of protocol,
+        authority and identifier (e.g. doi:10.34691/UCHILE/L9XF6R).
+      tags: [persistent-identifier, doi, global-id]
+    - term: Protocol
+      definition: The persistent identifier scheme, typically "doi".
+      tags: [identifier, protocol]
+    - term: Authority
+      definition: The registrant authority portion of a DOI (e.g. 10.34691).
+      tags: [identifier, authority, datacite]
+    - term: VersionState
+      definition: >-
+        Lifecycle state of a dataset version, such as DRAFT, RELEASED or
+        DEACCESSIONED.
+      tags: [versioning, lifecycle]
+    - term: Search API
+      definition: >-
+        The /api/search endpoint for discovering dataverses, datasets and
+        files by query, type and facets.
+      tags: [search, discovery, api]
+    - term: Native API
+      definition: >-
+        The versioned /api/v1 REST surface for creating, reading, updating and
+        managing dataverses, datasets and files.
+      tags: [rest, native-api, v1]
+    - term: OAI-PMH
+      definition: >-
+        Open Archives Initiative Protocol for Metadata Harvesting 2.0, the
+        HTTP interface exposed by the DSpace institutional repository for
+        harvesting metadata records.
+      tags: [oai-pmh, harvesting, dspace, metadata]
+    - term: Dublin Core
+      definition: >-
+        The default metadata schema (oai_dc) exposed by the OAI-PMH interface
+        for describing scholarly outputs.
+      tags: [dublin-core, metadata, oai_dc]

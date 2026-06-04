@@ -1,0 +1,60 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "uchile": "https://datos.uchile.cl/vocab#",
+    "dv": "https://guides.dataverse.org/en/latest/api/#",
+    "oai": "http://www.openarchives.org/OAI/2.0/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "@vocab": "https://schema.org/",
+
+    "name": "schema:name",
+    "url": "schema:url",
+    "description": "schema:description",
+
+    "University": "schema:CollegeOrUniversity",
+    "Dataset": "schema:Dataset",
+    "DataCatalog": "schema:DataCatalog",
+    "DataFile": "schema:DataDownload",
+    "Dataverse": "schema:Collection",
+
+    "identifier": "schema:identifier",
+    "global_id": "schema:identifier",
+    "doi": "schema:identifier",
+    "authors": { "@id": "schema:author", "@container": "@set" },
+    "contacts": { "@id": "schema:contactPoint", "@container": "@set" },
+    "keywords": { "@id": "schema:keywords", "@container": "@set" },
+    "subjects": { "@id": "schema:about", "@container": "@set" },
+    "publisher": "schema:publisher",
+    "published_at": { "@id": "schema:datePublished", "@type": "schema:DateTime" },
+    "createdAt": { "@id": "schema:dateCreated", "@type": "schema:DateTime" },
+    "updatedAt": { "@id": "schema:dateModified", "@type": "schema:DateTime" },
+    "affiliation": "schema:affiliation",
+    "fileCount": "schema:numberOfItems",
+    "citation": "schema:citation",
+    "versionState": "uchile:versionState",
+    "majorVersion": "uchile:majorVersion",
+    "minorVersion": "uchile:minorVersion",
+    "contentType": "schema:encodingFormat",
+    "filesize": "schema:contentSize",
+    "checksumValue": "uchile:checksum"
+  },
+  "@type": "CollegeOrUniversity",
+  "name": "University of Chile",
+  "url": "https://uchile.cl/",
+  "description": "Universidad de Chile, the country's oldest public university (founded 1842, Santiago).",
+  "subjectOf": [
+    {
+      "@type": "DataCatalog",
+      "name": "UChile Research Data Repository (Dataverse)",
+      "url": "https://datos.uchile.cl/",
+      "description": "Dataverse 5.13 research data repository exposing REST/native and Search APIs; datasets minted with DataCite DOIs."
+    },
+    {
+      "@type": "DataCatalog",
+      "name": "Repositorio Academico (DSpace, OAI-PMH)",
+      "url": "https://repositorio.uchile.cl/",
+      "description": "DSpace institutional repository exposing an OAI-PMH 2.0 interface for Dublin Core metadata harvesting."
+    }
+  ]
+}

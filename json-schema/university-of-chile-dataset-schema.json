@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/university-of-chile/main/json-schema/university-of-chile-dataset-schema.json",
+  "title": "Dataverse Dataset",
+  "description": "A research dataset as represented by the University of Chile Dataverse API (datos.uchile.cl). Properties reflect the Dataset schema published in the deployment's live OpenAPI document (Dataverse 5.13).",
+  "type": "object",
+  "properties": {
+    "id": { "type": "number", "description": "Internal numeric identifier of the dataset." },
+    "identifier": { "type": "string", "description": "Persistent identifier suffix (e.g. UCHILE/L9XF6R)." },
+    "protocol": { "type": "string", "description": "Persistent identifier protocol (e.g. doi)." },
+    "authority": { "type": "string", "description": "Persistent identifier authority (e.g. 10.34691)." },
+    "identifierRegistered": { "type": "boolean", "description": "Whether the global ID has been registered with the provider (DataCite)." },
+    "globalIdCreateTime": { "type": "string", "format": "date-time", "description": "When the global ID was created." },
+    "publicationDate": { "type": "string", "format": "date-time", "description": "Date the dataset was published." },
+    "createDate": { "type": "string", "format": "date-time", "description": "Date the dataset record was created." },
+    "modificationTime": { "type": "string", "format": "date-time", "description": "Last modification time." },
+    "storageIdentifier": { "type": "string", "description": "Storage location identifier." },
+    "storageDriver": { "type": "string", "description": "Storage driver in use." },
+    "metadataLanguage": { "type": "string", "description": "Language of the dataset metadata." },
+    "fileAccessRequest": { "type": "boolean", "description": "Whether file access requests are enabled." },
+    "useGenericThumbnail": { "type": "boolean", "description": "Whether a generic thumbnail is used." },
+    "previewImageAvailable": { "type": "boolean", "description": "Whether a preview image is available." },
+    "harvestIdentifier": { "type": "string", "description": "Identifier if the dataset was harvested." },
+    "harvestedFrom": { "type": "object", "description": "Harvesting client the dataset was harvested from." },
+    "files": { "type": "array", "description": "Files belonging to the dataset.", "items": { "type": "object" } },
+    "versions": { "type": "array", "description": "Dataset versions.", "items": { "type": "object" } },
+    "datasetLocks": { "type": "array", "description": "Active locks on the dataset.", "items": { "type": "object" } }
+  },
+  "additionalProperties": true
+}
