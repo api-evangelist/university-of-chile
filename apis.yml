@@ -1,0 +1,89 @@
+---
+aid: university-of-chile
+name: University of Chile
+description: >-
+  The University of Chile (Universidad de Chile, UChile) is the country's
+  oldest public university, founded in 1842 in Santiago, and is ranked #139
+  in the QS World University Rankings 2025. Its public, machine-readable
+  footprint is centered on research and scholarly infrastructure rather than
+  a single branded developer portal: a Dataverse-based research data
+  repository (datos.uchile.cl) that exposes the standard Dataverse REST API,
+  and a DSpace institutional repository (repositorio.uchile.cl) that exposes
+  an OAI-PMH interface for metadata harvesting. The university also maintains
+  official open-source GitHub organizations for its Open edX online-education
+  platform. No general-purpose, self-service developer program with API keys
+  was confirmed; access is via open standards and open data.
+type: Index
+position: Consumer
+access: 3rd-Party
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/university-of-chile/refs/heads/main/apis.yml
+tags:
+  - Education
+  - Higher Education
+  - University
+  - Research Data
+  - Open Data
+  - Repository
+  - OAI-PMH
+  - Dataverse
+  - Chile
+created: '2026-06-03'
+modified: '2026-06-03'
+specificationVersion: '0.19'
+apis:
+  - aid: university-of-chile:research-data-dataverse
+    name: UChile Research Data Repository (Dataverse API)
+    description: >-
+      The University of Chile research data repository runs on Dataverse
+      (version 5.13 confirmed live via /api/info/version) and exposes the
+      standard Dataverse REST/native and Search APIs for discovering and
+      retrieving datasets, dataverses and files. Content is DOI-minted via
+      DataCite. This is open scholarly infrastructure rather than a gated
+      developer product.
+    humanURL: https://datos.uchile.cl/
+    baseURL: https://datos.uchile.cl/api
+    tags: [ Research Data, Dataverse, Open Data, Repository, REST ]
+    properties:
+      - type: Documentation
+        url: https://guides.dataverse.org/en/latest/api/
+      - type: Website
+        url: https://datos.uchile.cl/
+  - aid: university-of-chile:repositorio-oai-pmh
+    name: Repositorio Academico OAI-PMH
+    description: >-
+      The University of Chile institutional repository (Repositorio
+      Academico), managed by SISIB and built on DSpace, exposes an
+      OAI-PMH 2.0 interface for harvesting Dublin Core / metadata records
+      of theses, articles, books and other scholarly outputs. The OAI base
+      URL is registered in OpenDOAR/ROAR. Probes returned an intermittent
+      HTTP 503 at review time; the endpoint is documented but was not
+      confirmed live during this review.
+    humanURL: https://repositorio.uchile.cl/page/acerca
+    baseURL: https://repositorio.uchile.cl/oai/request
+    tags: [ Repository, OAI-PMH, DSpace, Metadata, Open Access ]
+    properties:
+      - type: Documentation
+        url: https://repositorio.uchile.cl/page/acerca
+      - type: Website
+        url: https://repositorio.uchile.cl/
+common:
+  - type: Website
+    url: https://uchile.cl/
+  - type: GitHub
+    url: https://github.com/eol-uchile
+  - type: SourceCode
+    url: https://github.com/open-uchile
+  - type: LinkedIn
+    url: https://www.linkedin.com/school/universidad-de-chile/
+  - type: Plans
+    url: plans/university-of-chile-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/university-of-chile-rate-limits.yml
+  - type: FinOps
+    url: finops/university-of-chile-finops.yml
+  - type: Review
+    url: review.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

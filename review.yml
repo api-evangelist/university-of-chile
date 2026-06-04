@@ -1,0 +1,46 @@
+---
+name: University of Chile
+description: University of Chile public developer/API footprint review for APIs.json cataloging.
+url: https://raw.githubusercontent.com/api-evangelist/university-of-chile/refs/heads/main/review.yml
+created: '2026-06-03'
+modified: '2026-06-03'
+reviews:
+  - date: '2026-06-03'
+    rating: 2
+    summary: >-
+      The University of Chile has no single branded developer portal or
+      self-service API program with keys. Its confirmed machine-readable
+      footprint is open scholarly infrastructure. The Dataverse research
+      data repository was verified live: GET /api/info/version returned
+      {"status":"OK","version":"5.13"}, confirming the standard Dataverse
+      REST/Search API. The DSpace institutional repository's OAI-PMH base
+      URL is documented in OpenDOAR/ROAR but probes returned HTTP 503 at
+      review time, so it is cataloged as documented-but-unconfirmed. Two
+      official GitHub orgs (eol-uchile, open-uchile) host Open edX forks,
+      not a public API. No endpoints were fabricated; only directly
+      observed or registry-documented properties are recorded.
+    endpoints:
+      - url: https://datos.uchile.cl/api/info/version
+        status: 200
+        note: Dataverse 5.13 version JSON returned live; confirms REST API.
+      - url: https://datos.uchile.cl/
+        status: 200
+        note: Research data repository (Dataverse), 145+ datasets, DataCite DOIs.
+      - url: https://uchile.cl/
+        status: 200
+        note: Official institution website (SISIB - Universidad de Chile).
+      - url: https://repositorio.uchile.cl/oai/request?verb=Identify
+        status: 503
+        note: DSpace OAI-PMH base (OpenDOAR/ROAR documented); 503 at review time.
+      - url: https://repositorio.uchile.cl/page/acerca
+        status: 503
+        note: Repositorio Academico about page; intermittent 503 during probe.
+      - url: https://github.com/eol-uchile
+        status: 200
+        note: Official Open edX online-education org (eol@uchile.cl), 137 repos.
+      - url: https://github.com/open-uchile
+        status: 200
+        note: Official Open UChile org (eol@uchile.cl), Open edX forks, 12 repos.
+      - url: https://www.linkedin.com/school/universidad-de-chile/
+        status: 999
+        note: Official LinkedIn school page; 999 anti-bot block, not verified live.
