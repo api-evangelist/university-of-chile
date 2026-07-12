@@ -90,6 +90,8 @@ apis:
       - type: Website
         url: https://repositorio.uchile.cl/
 common:
+  - type: DomainSecurity
+    url: security/university-of-chile-domain-security.yml
   - type: Website
     url: https://uchile.cl/
   - type: GitHub
