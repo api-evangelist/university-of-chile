@@ -90,6 +90,8 @@ apis:
       - type: Website
         url: https://repositorio.uchile.cl/
 common:
+  - type: AgenticAccess
+    url: agentic-access/university-of-chile-agentic-access.yml
   - type: DomainSecurity
     url: security/university-of-chile-domain-security.yml
   - type: Website
