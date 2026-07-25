@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  title: UChile Research Data Repository (Dataverse API) Access Pids API
+  version: 1.0.0
+  description: OpenAPI description served live from the University of Chile Dataverse research data repository at https://datos.uchile.cl (Dataverse v5.13, build 1244-79d6e57). Captured 2026-06-03 from https://datos.uchile.cl/openapi. The servers entry has been set to the real public base URL; internal default-server hostnames from the source document were replaced. All paths and schemas are reproduced as published by the deployment.
+servers:
+- url: https://datos.uchile.cl
+  description: University of Chile Dataverse (production)
+tags:
+- name: Pids
+paths:
+  /api/v1/pids:
+    get:
+      operationId: getPid
+      parameters:
+      - name: persistentId
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Pids
+  /api/v1/pids/unreserved:
+    get:
+      operationId: getUnreserved
+      parameters:
+      - name: persistentId
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Pids
+  /api/v1/pids/{id}/delete:
+    delete:
+      operationId: deletePid
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Pids
+  /api/v1/pids/{id}/reserve:
+    post:
+      operationId: reservePid
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Pids

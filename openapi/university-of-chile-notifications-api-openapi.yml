@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  title: UChile Research Data Repository (Dataverse API) Access Notifications API
+  version: 1.0.0
+  description: OpenAPI description served live from the University of Chile Dataverse research data repository at https://datos.uchile.cl (Dataverse v5.13, build 1244-79d6e57). Captured 2026-06-03 from https://datos.uchile.cl/openapi. The servers entry has been set to the real public base URL; internal default-server hostnames from the source document were replaced. All paths and schemas are reproduced as published by the deployment.
+servers:
+- url: https://datos.uchile.cl
+  description: University of Chile Dataverse (production)
+tags:
+- name: Notifications
+paths:
+  /api/v1/notifications/all:
+    get:
+      operationId: getAllNotificationsForUser
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Notifications
+  /api/v1/notifications/mutedEmails:
+    get:
+      operationId: getMutedEmailsForUser
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Notifications
+  /api/v1/notifications/mutedEmails/{typeName}:
+    put:
+      operationId: muteEmailsForUser
+      parameters:
+      - name: typeName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Notifications
+    delete:
+      operationId: unmuteEmailsForUser
+      parameters:
+      - name: typeName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Notifications
+  /api/v1/notifications/mutedNotifications:
+    get:
+      operationId: getMutedNotificationsForUser
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Notifications
+  /api/v1/notifications/mutedNotifications/{typeName}:
+    put:
+      operationId: muteNotificationsForUser
+      parameters:
+      - name: typeName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Notifications
+    delete:
+      operationId: unmuteNotificationsForUser
+      parameters:
+      - name: typeName
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Notifications
+  /api/v1/notifications/{id}:
+    delete:
+      operationId: deleteNotificationForUser
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Notifications

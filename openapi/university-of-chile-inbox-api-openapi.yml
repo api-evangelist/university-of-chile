@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  title: UChile Research Data Repository (Dataverse API) Access Inbox API
+  version: 1.0.0
+  description: OpenAPI description served live from the University of Chile Dataverse research data repository at https://datos.uchile.cl (Dataverse v5.13, build 1244-79d6e57). Captured 2026-06-03 from https://datos.uchile.cl/openapi. The servers entry has been set to the real public base URL; internal default-server hostnames from the source document were replaced. All paths and schemas are reproduced as published by the deployment.
+servers:
+- url: https://datos.uchile.cl
+  description: University of Chile Dataverse (production)
+tags:
+- name: Inbox
+paths:
+  /api/v1/inbox:
+    post:
+      operationId: acceptMessage
+      requestBody: {}
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Inbox

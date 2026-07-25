@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+  title: UChile Research Data Repository (Dataverse API) Access Batch API
+  version: 1.0.0
+  description: OpenAPI description served live from the University of Chile Dataverse research data repository at https://datos.uchile.cl (Dataverse v5.13, build 1244-79d6e57). Captured 2026-06-03 from https://datos.uchile.cl/openapi. The servers entry has been set to the real public base URL; internal default-server hostnames from the source document were replaced. All paths and schemas are reproduced as published by the deployment.
+servers:
+- url: https://datos.uchile.cl
+  description: University of Chile Dataverse (production)
+tags:
+- name: Batch
+paths:
+  /api/v1/batch/harvest:
+    get:
+      operationId: harvest
+      parameters:
+      - name: path
+        in: query
+        schema:
+          type: string
+      - name: dv
+        in: query
+        schema:
+          type: string
+      - name: createDV
+        in: query
+        schema:
+          type: boolean
+      - name: key
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Batch
+  /api/v1/batch/import:
+    post:
+      operationId: postImport
+      parameters:
+      - name: dv
+        in: query
+        schema:
+          type: string
+      - name: key
+        in: query
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              type: string
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Batch
+    get:
+      operationId: getImport
+      parameters:
+      - name: path
+        in: query
+        schema:
+          type: string
+      - name: dv
+        in: query
+        schema:
+          type: string
+      - name: createDV
+        in: query
+        schema:
+          type: boolean
+      - name: key
+        in: query
+        schema:
+          type: string
+      responses:
+        default:
+          content:
+            '*/*':
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Batch
+  /api/v1/batch/jobs/import/datasets/files/{identifier}:
+    post:
+      operationId: getFilesystemImport
+      parameters:
+      - name: identifier
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: mode
+        in: query
+        schema:
+          type: string
+          default: MERGE
+      - name: uploadFolder
+        in: query
+        schema:
+          type: string
+      - name: totalSize
+        in: query
+        schema:
+          type: number
+      responses:
+        default:
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Default Response.
+      tags:
+      - Batch
