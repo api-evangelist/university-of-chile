@@ -1,0 +1,28 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UChile Research Data Repository (Dataverse API) Access Mail API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Mail",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "sendMail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datos.uchile.cl/api/v1/mail/notifications"
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

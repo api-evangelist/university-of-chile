@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "UChile Research Data Repository (Dataverse API) Access Licenses API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Licenses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getLicenses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datos.uchile.cl/api/v1/licenses"
+          }
+        },
+        {
+          "info": {
+            "name": "addLicense",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://datos.uchile.cl/api/v1/licenses"
+          }
+        },
+        {
+          "info": {
+            "name": "getDefault",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datos.uchile.cl/api/v1/licenses/default"
+          }
+        },
+        {
+          "info": {
+            "name": "setDefault",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://datos.uchile.cl/api/v1/licenses/default/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getLicenseById",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://datos.uchile.cl/api/v1/licenses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "deleteLicenseById",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://datos.uchile.cl/api/v1/licenses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "setActiveState",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://datos.uchile.cl/api/v1/licenses/:id/:active/:activeState",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "activeState",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "setSortOrder",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://datos.uchile.cl/api/v1/licenses/:id/:sortOrder/:sortOrder",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

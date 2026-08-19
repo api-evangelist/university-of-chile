@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "17fa51be-ce4a-40c8-a664-aa29243100c6",
+      "name": "Inbox",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0636a851-df3f-43fa-b725-d93b8d5fff48",
+          "name": "accept Message",
+          "request": {
+            "name": "accept Message",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "inbox"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "*/*"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {}
+          },
+          "response": [
+            {
+              "id": "642f0c42-8d04-47b9-9c56-c2f32a4add98",
+              "name": "Default Response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "inbox"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "*/*"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://datos.uchile.cl",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "763e73f2-018c-46bd-a60a-c52f9d6ebfa4",
+    "name": "UChile Research Data Repository (Dataverse API) Access Inbox API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI description served live from the University of Chile Dataverse research data repository at https://datos.uchile.cl (Dataverse v5.13, build 1244-79d6e57). Captured 2026-06-03 from https://datos.uchile.cl/openapi. The servers entry has been set to the real public base URL; internal default-server hostnames from the source document were replaced. All paths and schemas are reproduced as published by the deployment.",
+      "type": "text/plain"
+    }
+  }
+}
