@@ -343,6 +343,8 @@ apis:
   humanURL: https://datos.uchile.cl/
   baseURL: https://datos.uchile.cl/api
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -683,6 +685,8 @@ apis:
   humanURL: https://datos.uchile.cl/
   baseURL: https://datos.uchile.cl/api
   tags:
+  - Notification
+  tags_raw:
   - Notifications
   properties:
   - type: OpenAPI
@@ -819,6 +823,8 @@ apis:
   humanURL: https://datos.uchile.cl/
   baseURL: https://datos.uchile.cl/api
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
