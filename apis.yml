@@ -900,6 +900,9 @@ apis:
   - type: x-vocabulary
     url: vocabulary/university-of-chile-vocabulary.yml
 common:
+  - type: CapabilityMap
+    url: capabilities/university-of-chile-capability-edges.yml
+    name: University of Chile Business Capability Map
   - type: AgenticAccess
     url: agentic-access/university-of-chile-agentic-access.yml
   - type: DomainSecurity
