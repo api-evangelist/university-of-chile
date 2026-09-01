@@ -1,18 +1,26 @@
----
 aid: university-of-chile
 name: University of Chile
+x-type: university
+x-category: Public Research University
 description: >-
-  The University of Chile (Universidad de Chile, UChile) is the country's
-  oldest public university, founded in 1842 in Santiago, and is ranked #139
-  in the QS World University Rankings 2025. Its public, machine-readable
-  footprint is centered on research and scholarly infrastructure rather than
-  a single branded developer portal: a Dataverse-based research data
-  repository (datos.uchile.cl) that exposes the standard Dataverse REST API,
-  and a DSpace institutional repository (repositorio.uchile.cl) that exposes
-  an OAI-PMH interface for metadata harvesting. The university also maintains
-  official open-source GitHub organizations for its Open edX online-education
-  platform. No general-purpose, self-service developer program with API keys
-  was confirmed; access is via open standards and open data.
+  The University of Chile (Universidad de Chile, UChile) is the country's oldest public university, founded in 1842
+  in Santiago, and Chile's largest research institution (ROR 047gc3g35, domain uchile.cl). Its programmable footprint
+  is entirely scholarly infrastructure and is real but SMALL: the institution self-hosts a Dataverse research data
+  repository at datos.uchile.cl (Dataverse 5.13, build 1244-79d6e57, administered from repositoriodedatos@uchile.cl)
+  and a DSpace institutional repository at repositorio.uchile.cl, and both answer machine calls today — a Dataverse
+  REST API and OAI-PMH provider on the first, a DSpace 6 REST API and OAI-PMH provider on the second. It also runs
+  U-Campus (ucampus.uchile.cl), the academic-management platform built in-house at the Facultad de Ciencias Físicas
+  y Matemáticas, whose /api/ path answers with structured JSON but is authenticated and undocumented. What UChile
+  does NOT have is engineering of its own behind any of it: every contract on those hosts is the product's, generated
+  by Dataverse or DSpace and identical to every other deployment of that software, so no OpenAPI is carried in this
+  repo. There is no central developer portal, no self-service key issuance, no published API terms of use (the Dataverse
+  install answers apiTermsOfUse with "There are no API Terms of Use"), no llms.txt and no security.txt. The institution
+  is a registrant rather than a publisher: a DataCite member (UCHILE) and repository client (UCHILE.DATAVERSE, prefix
+  10.34691, 5,709 DOIs) and a Crossref member (id 3330, prefix 10.5354, 2,330 current DOIs). Library discovery runs
+  on Ex Libris Primo VE (catalogo.uchile.cl, institution code 56UDC_INST) as a tenant, not as a UChile contract.
+  No UChile Shibboleth or SAML identity provider is published in the eduGAIN metadata aggregate, and Chile's COFRe
+  federation carries no uchile.cl entity — the one strong institution-operated identity surface most universities
+  have is absent here.
 type: Index
 deliveryModel:
   model: saas
@@ -22,10 +30,9 @@ deliveryModel:
   label: Hosted service · you call their endpoint
   confidence: high
   source:
-  - openapi
-  - pricing
-  generated: '2026-08-28'
-  method: derived
+  - probed
+  generated: '2026-09-01'
+  method: probed
 accessModel:
   pricing: free
   onboarding: unknown
@@ -43,32 +50,95 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/university-of-chile.png
 url: https://raw.githubusercontent.com/api-evangelist/university-of-chile/refs/heads/main/apis.yml
 tags:
-  - Education
-  - Higher Education
-  - University
-  - Research Data
-  - Open Data
-  - Repository
-  - OAI-PMH
-  - Dataverse
-  - Chile
+- Education
+- Higher Education
+- University
+- Public University
+- Research Data
+- Research Repository
+- Open Access
+- OAI-PMH
+- Dataverse
+- DSpace
+- Persistent Identifiers
+- Chile
+- Latin America
+- Spanish Language
 created: '2026-06-03'
-modified: '2026-06-03'
+modified: '2026-09-01'
 specificationVersion: '0.23'
 apis:
-- aid: university-of-chile:repositorio-oai-pmh
-  name: Repositorio Academico OAI-PMH
+- aid: university-of-chile:datos-dataverse-api
+  name: UChile Research Data Repository API (Dataverse)
   description: >-
-    The University of Chile institutional repository (Repositorio Academico), managed by SISIB and built
-    on DSpace, exposes an OAI-PMH 2.0 interface for harvesting Dublin Core / metadata records of theses,
-    articles, books and other scholarly outputs. The OAI base URL is registered in OpenDOAR/ROAR. Probes
-    returned an intermittent HTTP 503 at review time; the endpoint is documented but was not confirmed
-    live during this review.
+    The University of Chile self-hosts a Dataverse installation at datos.uchile.cl on its own network (200.89.78.15,
+    the same /16 as uchile.cl), administered from repositoriodedatos@uchile.cl. The REST API is open and unauthenticated
+    for read: GET /api/info/version returned 200 with {version 5.13, build 1244-79d6e57} and GET /api/search?q=*&type=dataset
+    returned 200 with 156 datasets on 2026-09-01. The host also serves its own generated OpenAPI at /openapi (200,
+    280,980 bytes) — but that document is the Dataverse product contract, titled "Deployed Resources" with internal
+    default-server hostnames, identical to every Dataverse 5.13 deployment. It is NOT UChile's engineering and is
+    deliberately not carried in this repo; a rebranded copy of it was removed on 2026-09-01. The endpoint is UChile's,
+    the contract is IQSS's.
+  humanURL: https://datos.uchile.cl/
+  baseURL: https://datos.uchile.cl/api
+  x-operator: institution
+  tags:
+  - Research Data
+  - Repository
+  - Dataverse
+  - Open Data
+  - Search
+  - DOI
+  properties:
+  - type: Website
+    url: https://datos.uchile.cl/
+  - type: Documentation
+    url: https://guides.dataverse.org/en/latest/api/
+  - type: x-openapi-upstream
+    url: https://datos.uchile.cl/openapi
+  - type: x-example
+    url: examples/university-of-chile-info-version-example.json
+  - type: x-example
+    url: examples/university-of-chile-search-example.json
+  - type: x-vocabulary
+    url: vocabulary/university-of-chile-vocabulary.yml
+- aid: university-of-chile:datos-oai-pmh
+  name: UChile Research Data Repository OAI-PMH
+  description: >-
+    OAI-PMH 2.0 provider on the University of Chile Dataverse installation. Confirmed live on 2026-09-01: ?verb=Identify
+    returned 200 with repositoryName "Repositorio de datos de investigación de la Universidad de Chile Dataverse
+    OAI Archive", adminEmail repositoriodedatos@uchile.cl and earliestDatestamp 2023-04-22. ?verb=ListMetadataFormats
+    returned 200 advertising Datacite, oai_datacite, dataverse_json, oai_dc and oai_ddi. ?verb=ListSets returns
+    noSetHierarchy — the archive is flat.
+  humanURL: https://datos.uchile.cl/
+  baseURL: https://datos.uchile.cl/oai
+  x-operator: institution
+  tags:
+  - OAI-PMH
+  - Metadata
+  - Harvesting
+  - DataCite
+  - Research Data
+  properties:
+  - type: Documentation
+    url: https://guides.dataverse.org/en/latest/admin/harvestserver.html
+  - type: Website
+    url: https://datos.uchile.cl/
+- aid: university-of-chile:repositorio-oai-pmh
+  name: Repositorio Académico OAI-PMH
+  description: >-
+    OAI-PMH 2.0 provider on the University of Chile institutional repository (Repositorio Académico), managed by
+    SISIB and built on DSpace. CONFIRMED LIVE on 2026-09-01, correcting the June 2026 profile which recorded an
+    intermittent 503 and left it unconfirmed: ?verb=Identify returned 200 with repositoryName "Repositorio Académico
+    de la Universidad de Chile" and repositoryIdentifier repositorio.uchile.cl; ?verb=ListMetadataFormats returned
+    200 advertising twelve prefixes — oai_dc, qdc, mods, mets, marc, didl, dim, etdms, ore, rdf, uketd_dc, xoai.
+    The adminEmail is still the DSpace default (dspace-help@myu.edu), which is the institution's to fix.
   humanURL: https://repositorio.uchile.cl/page/acerca
   baseURL: https://repositorio.uchile.cl/oai/request
+  x-operator: institution
   tags:
-  - Repository
   - OAI-PMH
+  - Repository
   - DSpace
   - Metadata
   - Open Access
@@ -77,854 +147,288 @@ apis:
     url: https://repositorio.uchile.cl/page/acerca
   - type: Website
     url: https://repositorio.uchile.cl/
-- aid: university-of-chile:university-of-chile-access-api
-  name: University of Chile Access API
-  description: The Access API from University of Chile — 20 operation(s) for access.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
+- aid: university-of-chile:repositorio-dspace-rest
+  name: Repositorio Académico DSpace REST API
+  description: >-
+    The DSpace 6 REST API on the University of Chile institutional repository, not catalogued before this run. Confirmed
+    live and open for read on 2026-09-01: GET /rest/test returned 200 "REST api is running.", GET /rest/communities
+    returned 200 with 28,511 bytes of real UChile community records, and GET /rest/collections returned 200. The
+    DSpace 7 path /server/api returns 404, fixing the software generation at DSpace 6.x. As with Dataverse, the
+    contract here is DSpace's product contract shared by every deployment — the endpoint is UChile's, the contract
+    is LYRASIS's, and none is carried in this repo.
+  humanURL: https://repositorio.uchile.cl/
+  baseURL: https://repositorio.uchile.cl/rest
+  x-operator: institution
   tags:
-  - Access
+  - Repository
+  - DSpace
+  - REST
+  - Open Access
+  - Metadata
   properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-access-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
   - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-admin-api
-  name: University of Chile Admin API
-  description: The Admin API from University of Chile — 120 operation(s) for admin.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
+    url: https://repositorio.uchile.cl/
+  - type: Documentation
+    url: https://github.com/DSpace/DSpace/tree/dspace-6_x/dspace-rest
+  - type: x-probe
+    url: https://repositorio.uchile.cl/rest/test
+- aid: university-of-chile:ucampus-api
+  name: U-Campus Academic Management API
+  description: >-
+    U-Campus is the University of Chile's own academic and curricular management platform, built in-house by the
+    Área de Infotecnologías of the Facultad de Ciencias Físicas y Matemáticas and extended across the university.
+    Its /api/ path is a live JSON surface on the institution's own host: GET /api/ returns 400 {"error":"Falta la
+    versión de la API"} and GET /api/2/ returns a JSON 404 — a versioned router that answers, not a 404 page. No
+    resource path resolved unauthenticated and no public reference, OpenAPI or developer documentation exists anywhere
+    on ucampus.uchile.cl. This is the closest thing UChile has to a course-catalog / registrar API and it is entirely
+    closed. No contract is generated to stand in for one.
+  humanURL: https://ucampus.uchile.cl/
+  baseURL: https://ucampus.uchile.cl/api
+  x-operator: institution
   tags:
-  - Admin
+  - Course Catalog
+  - Student Information System
+  - Academic Management
+  - Authenticated
   properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-admin-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
   - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-batch-api
-  name: University of Chile Batch API
-  description: The Batch API from University of Chile — 3 operation(s) for batch.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
+    url: https://ucampus.uchile.cl/
+- aid: university-of-chile:ucursos-api
+  name: U-Cursos API
+  description: >-
+    U-Cursos is the course-management platform used across University of Chile faculties, built on the same U-Campus
+    codebase and now productised by Centro Tecnológico Ucampus (ucampus.cl) for other Chilean universities. It runs
+    on u-cursos.cl, NOT under the uchile.cl registrable domain, so it is recorded as a tenant relationship rather
+    than a UChile contract. The API answers: GET https://www.u-cursos.cl/api/ returned 400 {"error":"Versión de
+    API debe ser numérica"} on 2026-09-01. Authenticated and undocumented; no contract saved.
+  humanURL: https://www.u-cursos.cl/
+  baseURL: https://www.u-cursos.cl/api
+  x-operator: tenant
   tags:
-  - Batch
+  - Course Catalog
+  - Learning Platform
+  - Authenticated
+  - Vendor Platform
   properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-batch-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
   - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-builtin-users-api
-  name: University of Chile Builtin Users API
-  description: The Builtin Users API from University of Chile — 4 operation(s) for builtin users.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
+    url: https://www.u-cursos.cl/
+- aid: university-of-chile:catalogo-primo
+  name: Catálogo Bibliotecas UChile (Ex Libris Primo VE)
+  description: >-
+    Library discovery for the University of Chile runs on Ex Libris (Clarivate) Primo VE at catalogo.uchile.cl,
+    institution code 56UDC_INST. Probed 2026-09-01: the bare host 200s into /mng/login (the Alma back office) and
+    https://catalogo.uchile.cl/discovery/search?vid=56UDC_INST:56UDC_INST returns the Primo Explore app shell (200).
+    The subdomain is UChile's but the platform, the Alma/Primo APIs and the contract are Ex Libris's, shared by
+    every customer. Recorded as a tenant relationship; no Ex Libris contract is saved here.
+  humanURL: https://catalogo.uchile.cl/discovery/search?vid=56UDC_INST:56UDC_INST
+  x-operator: tenant
   tags:
-  - Builtin Users
+  - Library
+  - Discovery
+  - Primo
+  - Alma
+  - Ex Libris
+  - Vendor Platform
   properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-builtin-users-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
   - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-datasets-api
-  name: University of Chile Datasets API
-  description: The Datasets API from University of Chile — 62 operation(s) for datasets.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
+    url: https://catalogo.uchile.cl/discovery/search?vid=56UDC_INST:56UDC_INST
+  - type: Documentation
+    url: https://developers.exlibrisgroup.com/alma/apis/
+- aid: university-of-chile:datacite-membership
+  name: DataCite membership and repository registration
+  description: >-
+    The University of Chile is a DataCite member, not a DataCite operator. Evidenced 2026-09-01 from the DataCite
+    REST API: provider UCHILE (memberType consortium, rorId https://ror.org/047gc3g35, country CL), consortium organization
+    VWYS, and repository client UCHILE.DATAVERSE — "Repositorio de Datos de Investigación de la Universidad de Chile",
+    registered 2019, url https://datos.uchile.cl/. Prefix 10.34691 resolves to that client and carries 5,709 DOIs.
+    This is a fact about UChile, recorded as a membership; the DataCite API contract belongs to DataCite and is
+    not saved here.
+  humanURL: https://datacite.org/
+  baseURL: https://api.datacite.org
+  x-operator: registry
   tags:
-  - Datasets
+  - DataCite
+  - DOI
+  - Persistent Identifiers
+  - Registry
+  - Membership
   properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-datasets-api-openapi.yml
+  - type: x-registry-record
+    url: https://api.datacite.org/providers/uchile
+  - type: x-registry-record
+    url: https://api.datacite.org/clients/uchile.dataverse
+  - type: x-registry-record
+    url: https://api.datacite.org/prefixes/10.34691
   - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-datatags-api
-  name: University of Chile Datatags API
-  description: The Datatags API from University of Chile — 1 operation(s) for datatags.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
+    url: https://support.datacite.org/docs/api
+- aid: university-of-chile:crossref-membership
+  name: Crossref membership
+  description: >-
+    The University of Chile is a Crossref member, id 3330, primary name "Universidad de Chile", DOI prefix 10.5354,
+    with 2,330 current DOIs recorded at probe time (2026-09-01). Used for the university's journal publishing programme.
+    A membership fact, recorded as such; the Crossref API contract is Crossref's.
+  humanURL: https://www.crossref.org/
+  baseURL: https://api.crossref.org
+  x-operator: registry
   tags:
-  - Datatags
+  - Crossref
+  - DOI
+  - Persistent Identifiers
+  - Registry
+  - Membership
+  - Scholarly Publishing
   properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-datatags-api-openapi.yml
+  - type: x-registry-record
+    url: https://api.crossref.org/members/3330
   - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-dataverses-api
-  name: University of Chile Dataverses API
-  description: The Dataverses API from University of Chile — 28 operation(s) for dataverses.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
+    url: https://api.crossref.org/swagger-ui/index.html
+- aid: university-of-chile:ror-record
+  name: ROR organization record
+  description: >-
+    The University of Chile's Research Organization Registry record: https://ror.org/047gc3g35, established 1842,
+    declared domain uchile.cl, last modified 2026-08-25 (ROR schema 2.1). Confirmed 200 from the ROR API on 2026-09-01.
+    This is the canonical machine-readable identity for the institution and the anchor the DataCite member record
+    points back at. A registry membership, not a UChile-operated API.
+  humanURL: https://ror.org/047gc3g35
+  baseURL: https://api.ror.org
+  x-operator: registry
   tags:
-  - Dataverses
+  - ROR
+  - Organization Identifiers
+  - Registry
+  - Membership
   properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-dataverses-api-openapi.yml
+  - type: x-registry-record
+    url: https://api.ror.org/v2/organizations/047gc3g35
   - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-edit-api
-  name: University of Chile Edit API
-  description: The Edit API from University of Chile — 1 operation(s) for edit.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Edit
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-edit-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-files-api
-  name: University of Chile Files API
-  description: The Files API from University of Chile — 13 operation(s) for files.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - File
-  tags_raw:
-  - Files
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-files-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-harvest-api
-  name: University of Chile Harvest API
-  description: The Harvest API from University of Chile — 7 operation(s) for harvest.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Harvest
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-harvest-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-inbox-api
-  name: University of Chile Inbox API
-  description: The Inbox API from University of Chile — 1 operation(s) for inbox.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Inbox
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-inbox-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-info-api
-  name: University of Chile Info API
-  description: The Info API from University of Chile — 40 operation(s) for info.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Info
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-info-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-ingest-api
-  name: University of Chile Ingest API
-  description: The Ingest API from University of Chile — 1 operation(s) for ingest.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Ingest
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-ingest-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-licenses-api
-  name: University of Chile Licenses API
-  description: The Licenses API from University of Chile — 6 operation(s) for licenses.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Licenses
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-licenses-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-mail-api
-  name: University of Chile Mail API
-  description: The Mail API from University of Chile — 1 operation(s) for mail.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Mail
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-mail-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-meta-api
-  name: University of Chile Meta API
-  description: The Meta API from University of Chile — 2 operation(s) for meta.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Meta
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-meta-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-metadatablocks-api
-  name: University of Chile Metadatablocks API
-  description: The Metadatablocks API from University of Chile — 2 operation(s) for metadatablocks.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Metadatablocks
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-metadatablocks-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-mydata-api
-  name: University of Chile Mydata API
-  description: The Mydata API from University of Chile — 1 operation(s) for mydata.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Mydata
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-mydata-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-notifications-api
-  name: University of Chile Notifications API
-  description: The Notifications API from University of Chile — 6 operation(s) for notifications.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Notification
-  tags_raw:
-  - Notifications
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-notifications-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-pids-api
-  name: University of Chile Pids API
-  description: The Pids API from University of Chile — 4 operation(s) for pids.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Pids
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-pids-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-roles-api
-  name: University of Chile Roles API
-  description: The Roles API from University of Chile — 2 operation(s) for roles.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Roles
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-roles-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-search-api
-  name: University of Chile Search API
-  description: The Search API from University of Chile — 1 operation(s) for search.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Search
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-search-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-users-api
-  name: University of Chile Users API
-  description: The Users API from University of Chile — 8 operation(s) for users.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - User
-  tags_raw:
-  - Users
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-users-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
-- aid: university-of-chile:university-of-chile-workflows-api
-  name: University of Chile Workflows API
-  description: The Workflows API from University of Chile — 1 operation(s) for workflows.
-  humanURL: https://datos.uchile.cl/
-  baseURL: https://datos.uchile.cl/api
-  tags:
-  - Workflows
-  properties:
-  - type: OpenAPI
-    url: openapi/university-of-chile-workflows-api-openapi.yml
-  - type: Documentation
-    url: https://guides.dataverse.org/en/latest/api/
-  - type: Website
-    url: https://datos.uchile.cl/
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataset-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-datafile-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-dataverse-schema.json
-  - type: x-json-schema
-    url: json-schema/university-of-chile-search-item-schema.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataset-structure.json
-  - type: x-json-structure
-    url: json-structure/university-of-chile-dataverse-structure.json
-  - type: x-example
-    url: examples/university-of-chile-search-example.json
-  - type: x-example
-    url: examples/university-of-chile-info-version-example.json
-  - type: x-rules
-    url: rules/university-of-chile-rules.yml
-  - type: x-vocabulary
-    url: vocabulary/university-of-chile-vocabulary.yml
+    url: https://ror.readme.io/docs/rest-api
 common:
-  - type: CapabilityMap
-    url: capabilities/university-of-chile-capability-edges.yml
-    name: University of Chile Business Capability Map
-  - type: AgenticAccess
-    url: agentic-access/university-of-chile-agentic-access.yml
-  - type: DomainSecurity
-    url: security/university-of-chile-domain-security.yml
-  - type: Website
-    url: https://uchile.cl/
-  - type: GitHub
-    url: https://github.com/eol-uchile
-  - type: SourceCode
-    url: https://github.com/open-uchile
-  - type: LinkedIn
-    url: https://www.linkedin.com/school/universidad-de-chile/
-  - type: Plans
-    url: plans/university-of-chile-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/university-of-chile-rate-limits.yml
-  - type: FinOps
-    url: finops/university-of-chile-finops.yml
-  - type: Review
-    url: review.yml
-  - type: JSONLD
-    url: json-ld/university-of-chile-context.jsonld
+- type: Website
+  url: https://uchile.cl/
+- type: OpenData
+  url: https://datos.uchile.cl/
+- type: ResearchRepository
+  url: https://repositorio.uchile.cl/
+- type: LibraryCatalog
+  url: https://catalogo.uchile.cl/discovery/search?vid=56UDC_INST:56UDC_INST
+- type: CourseCatalog
+  url: https://ucampus.uchile.cl/
+- type: AIPolicy
+  url: https://uchile.cl/informacion-y-bibliotecas/lineamientos-uso-ia-en-tesis
+- type: Documentation
+  url: https://guides.dataverse.org/en/latest/api/
+- type: GitHubOrganization
+  url: https://github.com/eol-uchile
+- type: GitHubOrganization
+  url: https://github.com/open-uchile
+- type: LinkedIn
+  url: https://www.linkedin.com/school/universidad-de-chile/
+- type: CapabilityMap
+  url: capabilities/university-of-chile-capability-edges.yml
+  name: University of Chile Business Capability Map
+- type: DomainSecurity
+  url: security/university-of-chile-domain-security.yml
+- type: Conformance
+  url: conformance/university-of-chile-conformance.yml
+- type: Plans
+  url: plans/university-of-chile-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/university-of-chile-rate-limits.yml
+- type: FinOps
+  url: finops/university-of-chile-finops.yml
+- type: Review
+  url: review.yml
+- type: JSONLD
+  url: json-ld/university-of-chile-context.jsonld
+x-coverage:
+  state: covered
+  reason: covered
+  detail: >-
+    Five institution-operated machine surfaces were found and verified live on 2026-09-01 — a Dataverse 5.13 REST
+    API and OAI-PMH provider on datos.uchile.cl, a DSpace 6 REST API and OAI-PMH provider on repositorio.uchile.cl,
+    and an authenticated JSON API on U-Campus (ucampus.uchile.cl/api) — plus three registry memberships evidenced
+    from the registries' own APIs (DataCite UCHILE / UCHILE.DATAVERSE / prefix 10.34691, Crossref member 3330 /
+    prefix 10.5354, ROR 047gc3g35). Two vendor platforms are recorded as tenant relationships rather than UChile
+    contracts: Ex Libris Primo VE (catalogo.uchile.cl, 56UDC_INST) and U-Cursos on u-cursos.cl. THE MAJOR CORRECTION:
+    this repo previously carried 24 OpenAPIs titled "UChile Research Data Repository (Dataverse API) …", split by
+    tag from one document, plus 49 collections, 4 JSON Schemas titled "Dataverse Dataset/DataFile/Collection", 2
+    JSON Structures, 2 Spectral rulesets and an agentic-access profile claiming 419 operations. All of it derives
+    from one Dataverse product contract that the June 2026 pass captured from datos.uchile.cl/openapi and rebranded
+    with a UChile title — the live document is titled "Deployed Resources" and is identical to every Dataverse 5.13
+    deployment. The host-based audit could not see this because our own rebranding defeated the shared-title check.
+    84 files were removed; the deployment is kept as an institution-operated surface with probe evidence and no
+    contract. No identity federation exists to record: UChile publishes no entity in the eduGAIN aggregate (10,615
+    entities searched, zero uchile matches) and Chile's COFRe federation carries no uchile.cl IdP. api.uchile.cl
+    resolves to 200.89.77.21 but answers nothing on 80 or 443. No developer portal, no llms.txt, no security.txt,
+    and the Dataverse install states it has no API terms of use.
+  generated: '2026-09-01'
+  method: probed
+  evidence:
+  - url: https://datos.uchile.cl/api/info/version
+    status: 200
+  - url: https://datos.uchile.cl/api/search?q=*&type=dataset
+    status: 200
+  - url: https://datos.uchile.cl/api/info/server
+    status: 200
+  - url: https://datos.uchile.cl/openapi
+    status: 200
+  - url: https://datos.uchile.cl/oai?verb=Identify
+    status: 200
+  - url: https://datos.uchile.cl/oai?verb=ListMetadataFormats
+    status: 200
+  - url: https://datos.uchile.cl/oai?verb=ListSets
+    status: 200
+  - url: https://datos.uchile.cl/api/info/apiTermsOfUse
+    status: 200
+  - url: https://repositorio.uchile.cl/oai/request?verb=Identify
+    status: 200
+  - url: https://repositorio.uchile.cl/oai/request?verb=ListMetadataFormats
+    status: 200
+  - url: https://repositorio.uchile.cl/rest/test
+    status: 200
+  - url: https://repositorio.uchile.cl/rest/communities
+    status: 200
+  - url: https://repositorio.uchile.cl/rest/collections?limit=1
+    status: 200
+  - url: https://repositorio.uchile.cl/server/api
+    status: 404
+  - url: https://ucampus.uchile.cl/api/
+    status: 400
+  - url: https://ucampus.uchile.cl/api/2/
+    status: 404
+  - url: https://www.u-cursos.cl/api/
+    status: 400
+  - url: https://catalogo.uchile.cl/discovery/search?vid=56UDC_INST:56UDC_INST
+    status: 200
+  - url: https://api.datacite.org/providers/uchile
+    status: 200
+  - url: https://api.datacite.org/clients/uchile.dataverse
+    status: 200
+  - url: https://api.datacite.org/prefixes/10.34691
+    status: 200
+  - url: https://api.crossref.org/members/3330
+    status: 200
+  - url: https://api.ror.org/v2/organizations/047gc3g35
+    status: 200
+  - url: https://mds.edugain.org/edugain-v2.xml
+    status: 200
+  - url: https://technical.edugain.org/api.php?action=list_feds
+    status: 200
+  - url: https://uchile.cl/informacion-y-bibliotecas/lineamientos-uso-ia-en-tesis
+    status: 200
+  - url: https://uchile.cl/llms.txt
+    status: 404
+  - url: https://uchile.cl/.well-known/security.txt
+    status: 404
+  - url: https://api.uchile.cl/
+    status: 0
+x-enrichment:
+  pipeline: pipeline-university
+  run: '2026-09-01'
+  note: >-
+    Operator attribution re-settled per pipeline-university.md. 84 files removed: the Dataverse product contract
+    (24 refined OpenAPIs + 1 _original), 49 collections, 4 JSON Schemas, 2 JSON Structures, 2 Spectral rulesets
+    and 1 agentic-access profile derived from it. Surfaces re-inventoried with x-operator on every entry.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
