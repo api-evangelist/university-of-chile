@@ -77,12 +77,22 @@ The University of Chile (Universidad de Chile, UChile) is Chile's oldest public 
 
 ## Tags
 
-Education, Higher Education, University, Research Data, Open Data, Repository, OAI-PMH, Dataverse, Chile
+Education, Higher Education, University, Public University, Research Data, Research Repository, Open Access, OAI-PMH, Dataverse, DSpace, Persistent Identifiers, Chile, Latin America, Spanish Language
 
 ## APIs
 
-- **UChile Research Data Repository (Dataverse API)** — Dataverse 5.13 (confirmed live) exposing the standard Dataverse REST/Search API. Docs: https://guides.dataverse.org/en/latest/api/ — Repository: https://datos.uchile.cl/
-- **Repositorio Academico OAI-PMH** — DSpace institutional repository with an OAI-PMH 2.0 harvesting interface (base: `https://repositorio.uchile.cl/oai/request`). Documented in OpenDOAR/ROAR; returned HTTP 503 at review time. Docs: https://repositorio.uchile.cl/page/acerca
+Every surface carries an `x-operator` in `apis.yml`: **institution** (UChile runs the endpoint), **tenant** (UChile's account on a vendor platform), **registry** (UChile is registered in it).
+
+- **UChile Research Data Repository API (Dataverse)** — `institution` — Dataverse 5.13 self-hosted at `https://datos.uchile.cl/api`, open for unauthenticated read (confirmed live 2026-09-01). The contract it serves at `/openapi` is the Dataverse product contract and is deliberately NOT carried here.
+- **UChile Research Data Repository OAI-PMH** — `institution` — `https://datos.uchile.cl/oai`, advertising Datacite, oai_datacite, dataverse_json, oai_dc, oai_ddi.
+- **Repositorio Académico OAI-PMH** — `institution` — `https://repositorio.uchile.cl/oai/request`, CONFIRMED LIVE 2026-09-01 (the June 2026 pass recorded an intermittent 503), advertising twelve metadata prefixes.
+- **Repositorio Académico DSpace REST API** — `institution` — `https://repositorio.uchile.cl/rest`, DSpace 6, open for read. Not catalogued before this run.
+- **U-Campus Academic Management API** — `institution` — `https://ucampus.uchile.cl/api`, built in-house at FCFM; live but authenticated and undocumented.
+- **U-Cursos API** — `tenant` — `https://www.u-cursos.cl/api`, on the Ucampus platform's own domain, not uchile.cl.
+- **Catálogo Bibliotecas UChile** — `tenant` — Ex Libris Primo VE, institution code 56UDC_INST.
+- **DataCite membership** — `registry` — provider UCHILE, client UCHILE.DATAVERSE, prefix 10.34691 (5,709 DOIs).
+- **Crossref membership** — `registry` — member 3330, prefix 10.5354 (2,330 current DOIs).
+- **ROR organization record** — `registry` — https://ror.org/047gc3g35.
 
 ## Plans
 
@@ -99,7 +109,7 @@ Education, Higher Education, University, Research Data, Open Data, Repository, O
 ## Timestamps
 
 - Created: 2026-06-03
-- Modified: 2026-06-03
+- Modified: 2026-09-01
 
 ## Common Properties
 
@@ -111,10 +121,13 @@ Education, Higher Education, University, Research Data, Open Data, Repository, O
 ## Notes
 
 - No general-purpose, self-service developer portal with API keys was confirmed. Cataloged APIs are open scholarly infrastructure accessed via open standards.
-- The Dataverse API was confirmed live (`/api/info/version` returned version 5.13).
-- The DSpace OAI-PMH endpoint is documented in OpenDOAR/ROAR but returned an intermittent HTTP 503 during this review; treat as documented-but-unconfirmed.
+- **2026-09-01 attribution correction.** This repo previously carried 24 OpenAPIs titled "UChile Research Data Repository (Dataverse API) …", split by tag from one document, plus 49 collections, 4 JSON Schemas titled "Dataverse Dataset/DataFile/Collection", 2 JSON Structures, 2 Spectral rulesets and an agentic-access profile claiming 419 operations. All of it derives from a single **Dataverse product contract** the June 2026 pass captured from `datos.uchile.cl/openapi` and rebranded with a UChile title — the live document is titled "Deployed Resources" and is identical to every Dataverse 5.13 deployment. 84 files were removed. The endpoint is UChile's; the contract is IQSS's and belongs in Dataverse's own repo.
+- The Dataverse API was re-confirmed live 2026-09-01 (`/api/info/version` → 200, version 5.13 build 1244-79d6e57; `/api/search?q=*&type=dataset` → 200, 156 datasets).
+- The DSpace OAI-PMH endpoint at `repositorio.uchile.cl/oai/request` is now CONFIRMED LIVE (`?verb=Identify` → 200), correcting the June 2026 "documented-but-unconfirmed" note. Its `adminEmail` is still the DSpace default `dspace-help@myu.edu` — the institution's to fix.
+- **No identity federation.** UChile publishes no Shibboleth/SAML IdP in the eduGAIN aggregate (10,615 entities searched, zero uchile matches), and Chile's COFRe federation carries no uchile.cl entity. `idp.uchile.cl` and `pasaporte.uchile.cl` are NXDOMAIN. `api.uchile.cl` resolves to 200.89.77.21 but answers nothing on 80 or 443.
+- No `llms.txt` and no `.well-known/security.txt` on any institution host; the Dataverse install states it has no API terms of use.
 - The official GitHub orgs (eol-uchile, open-uchile) host Open edX forks for the university's online-education platform, not a public API.
-- LinkedIn returned a 999 anti-bot status and was not verified live.
+- LinkedIn returned a 999 anti-bot status; per the pipeline a bot challenge grades LIVE, not dead.
 
 ## Maintainers
 

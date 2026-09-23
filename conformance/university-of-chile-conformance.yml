@@ -1,0 +1,99 @@
+generated: '2026-09-01'
+method: probed
+source: >-
+  Live probes of datos.uchile.cl, repositorio.uchile.cl, ucampus.uchile.cl, catalogo.uchile.cl and the
+  DataCite / Crossref / ROR / eduGAIN registries on 2026-09-01. No conformance below is inferred from a
+  prose claim; every one names the endpoint and response that evidences it.
+docs: https://guides.dataverse.org/en/latest/api/
+note: >-
+  Education-regime domain standards for the University of Chile (Kin Score 0.12.0 `education` regime:
+  scim, lti, oneroster, ed-fi, caliper, qti, oai-pmh, shibboleth, saml, orcid, datacite, crossref).
+  Reward-only — a standard the institution does not evidence is recorded as conforms:false with the
+  probe that establishes it, never left blank and never invented. Note that oai-pmh and datacite are
+  satisfied by the SOFTWARE UChile deploys (Dataverse, DSpace) rather than by UChile engineering; the
+  institution's choice to run and expose them is still real, and the endpoints are on its own hosts.
+standards:
+- id: oai-pmh
+  conforms: true
+  evidence: >-
+    TWO institution-hosted OAI-PMH 2.0 providers, both verified 2026-09-01.
+    https://repositorio.uchile.cl/oai/request?verb=Identify returned 200 with protocolVersion 2.0,
+    repositoryName "Repositorio Académico de la Universidad de Chile", repositoryIdentifier
+    repositorio.uchile.cl, granularity YYYY-MM-DDThh:mm:ssZ; ?verb=ListMetadataFormats returned 200
+    advertising oai_dc, qdc, mods, mets, marc, didl, dim, etdms, ore, rdf, uketd_dc, xoai.
+    https://datos.uchile.cl/oai?verb=Identify returned 200 with repositoryName "Repositorio de datos de
+    investigación de la Universidad de Chile Dataverse OAI Archive", adminEmail
+    repositoriodedatos@uchile.cl, earliestDatestamp 2023-04-22T06:00:00Z, compression gzip/deflate;
+    ?verb=ListMetadataFormats returned 200 advertising Datacite, oai_datacite, dataverse_json, oai_dc,
+    oai_ddi. ?verb=ListSets returns the OAI error code noSetHierarchy — a valid protocol response.
+- id: datacite
+  conforms: true
+  evidence: >-
+    Registrant, evidenced from DataCite's own API on 2026-09-01. GET
+    https://api.datacite.org/providers/uchile → 200, name "University of Chile", symbol UCHILE,
+    memberType consortium, rorId https://ror.org/047gc3g35, country CL. GET
+    https://api.datacite.org/clients/uchile.dataverse → 200, "Repositorio de Datos de Investigación de
+    la Universidad de Chile", clientType repository, url https://datos.uchile.cl/, year 2019. GET
+    https://api.datacite.org/prefixes/10.34691 → 200, bound to client uchile.dataverse and provider vwys;
+    5,709 DOIs carry that prefix. The Dataverse OAI provider also emits the Datacite and oai_datacite
+    metadata prefixes, so DataCite metadata is machine-harvestable directly from UChile's host.
+- id: crossref
+  conforms: true
+  evidence: >-
+    GET https://api.crossref.org/members/3330 → 200, primary-name "Universidad de Chile", prefix 10.5354,
+    2,330 current DOIs at probe time (2026-09-01). Used by the university's journal publishing programme.
+- id: shibboleth
+  conforms: false
+  evidence: >-
+    No University of Chile Shibboleth IdP is discoverable. The eduGAIN metadata aggregate
+    (https://mds.edugain.org/edugain-v2.xml, 200, 93,185,130 bytes, 10,615 EntityDescriptors) contains
+    zero entities matching "uchile" in any entityID or DisplayName. Chile's national federation COFRe
+    (https://technical.edugain.org/api.php?action=list_feds → 200; reg_auth http://cofre.reuna.cl, in
+    eduGAIN production since 2013-10-31) publishes 22 reuna/redclara-registered entities, none of them
+    UChile's — the Chilean universities present are PUC, Talca, Bío-Bío, O'Higgins and UOH.
+    idp.uchile.cl and pasaporte.uchile.cl are NXDOMAIN.
+- id: saml
+  conforms: false
+  evidence: >-
+    Same probe as shibboleth. No SAML 2.0 EntityDescriptor for uchile.cl exists in the eduGAIN aggregate
+    or in the COFRe-registered set. sso.uchile.cl resolves (200.89.77.24) but publishes no SAML metadata
+    document at any conventional path.
+- id: orcid
+  conforms: false
+  evidence: >-
+    No ORCID integration is exposed on any institution host. The DSpace 6 REST API at
+    repositorio.uchile.cl/rest has no ORCID configuration endpoint (DSpace 6 predates the DSpace 7
+    orcid.* config surface), and the Dataverse 5.13 install exposes no ORCID authentication provider on
+    /api/info. No orcid.org member or integrator record was evidenced for the institution.
+- id: scim
+  conforms: false
+  evidence: >-
+    No /scim or /scim/v2 endpoint answers on uchile.cl, ucampus.uchile.cl or datos.uchile.cl. Identity
+    and provisioning sit inside U-Campus, whose /api/ router is authenticated and undocumented.
+- id: lti
+  conforms: false
+  evidence: >-
+    No LTI tool or platform registration surface is published. The Open edX deployments in the
+    eol-uchile and open-uchile GitHub organizations are course-platform source, not an institution LTI
+    endpoint, and no /lti/ or .well-known LTI configuration answers on any uchile.cl host.
+- id: oneroster
+  conforms: false
+  evidence: >-
+    No OneRoster endpoint. Rostering lives behind the authenticated U-Campus API
+    (https://ucampus.uchile.cl/api/ → 400 {"error":"Falta la versión de la API"}), which advertises no
+    IMS Global / 1EdTech conformance and publishes no reference.
+- id: ed-fi
+  conforms: false
+  evidence: >-
+    Ed-Fi is a US K-12 data standard with no adoption path in Chilean higher education. No Ed-Fi ODS,
+    descriptor or metadata endpoint answers on any uchile.cl host.
+- id: caliper
+  conforms: false
+  evidence: >-
+    No Caliper Analytics event store or sensor endpoint is published. No learning-analytics surface of
+    any kind was found on the institution's public hosts.
+- id: qti
+  conforms: false
+  evidence: >-
+    No QTI assessment interchange endpoint or published QTI package surface. Assessment sits inside
+    U-Cursos (https://www.u-cursos.cl/api/ → 400, authenticated) and inside the Open edX deployments.

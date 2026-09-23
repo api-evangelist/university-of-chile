@@ -1,8 +1,12 @@
 {
+  "generated": "2026-09-01",
+  "method": "probed",
+  "source": "https://datos.uchile.cl/api/info/version",
   "request": {
     "method": "GET",
     "url": "https://datos.uchile.cl/api/info/version",
-    "description": "Return the Dataverse software version and build of the University of Chile deployment. Captured live 2026-06-03."
+    "status": 200,
+    "description": "Return the Dataverse software version and build of the University of Chile deployment. Captured live 2026-09-01; unchanged from the 2026-06-03 capture (5.13 / 1244-79d6e57)."
   },
   "response": {
     "status": "OK",
